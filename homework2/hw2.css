@@ -1,0 +1,186 @@
+/*
+
+Welcome to Jonathan Hollander's CSS stylesheet rules.
+
+
+For the navigation, all you need to do is write your normal layout for navigation using your normal selectors ul, li, and a tags with the href, and then add the nav-ul class to the ul tag.  For the li tag, you can choose from 4 different selectors for the desktop version which include .nav-li-4 for 4 nav links spaced at 25%, 
+or 3 .nav-li-3 links spaced at 33% apart or .nav-li-2 spaced 50% apart.  For mobile navigation, the nav-mobile-li class allows you to get the full responsive 100% width nav bars spaced very nicely apart.  You should use the .nav-li-a and .nav-li-a:hover to add additional styling such as creating a dark box for the hover and nav-li-a to evenly space 
+your a tags and create a white a tag.  It's nice because you only need to add the nav-mobile-li class in addition to the rest of the tags in order to get a fully responsive navbar.
+
+*/
+
+/*
+To use the header, simply create a <div class="header"></div> with a <div class="header-inner-thin"></div> for a 90% width header along with your normal h1 element inside of the <div class="header-inner-thin"><h1>Welcome To your new page</h1></div> area.  
+If you prefer to see a full width header, you simply add <div class="header"></div> and then add a <div class="header-inner-wide"></div> along with your normal h1 element.
+
+
+For the header, I applied the clearfix technique using the :before and :after pseudo-element in order to allow the user to add as much content to the header as possible without going outside the margin.  This technique uses the :before to display:table with no content so this will prevent the top margin of the children from collapsing the content.  
+Applying the same style rules to the :after element 
+prevents the bottom margin from collapsing as well.  If the height of the header after the content is displayed is too large,
+you must find the height of the header content and add position:relative to the next item you wish to display along with the top:Xpx; with X being the height that looks good to the user.  This will ensure that the full header is fixed and the new content is seen. Z-index of 999 is applied to the fixed header so that scrolling will allow your content to be placed below the header.  padding:20px 0; has been applied to header before and after if you would like to place items in the header slightly above or below.  If you need more room for larger content, you can simply adjust the amount of padding to what looks good for your 
+content under the header:before, header:after section in the css.   */
+
+/*
+
+Any links that you add to your file, make sure to put an href attribute with a location.
+An href that contains pdf will show up with a logo of a pdf file after the word 
+to the link written.  An href that contains "html" will have a browser logo after the word written,
+and any other links written without either of these two attributes will come up with a 
+questionmark logo after the word written.
+
+
+The goal here was to target an attribute that contains 
+href="pdf", so I first used [href*="pdf"] in order to target
+all the elements containing these letters "pdf". Once it is selected
+I wanted to add the content:url("pdf.png"), so the image will show up for all of 
+the selectors containing this attribute.  The next step is to
+exclude anything containing this attribute in the navigation section, so
+I used *:not(nav) which means "take everything inside nav with this attribute "[href*="pdf"]" " and don't apply the style to it.
+  Unfortunately, this did not work as intended the first time doing it. 
+  In my test case, the href in the nav was also a descendant of the 
+  ul making it no longer excluded, so the following had to be added. 
+  I had to add "body > " before the "*:not(nav)" because " > " placed between body and "*:not(nav)"  allows the body to search for each
+  direct child of the body.   */
+
+
+
+
+.header{
+	
+
+
+
+	 top:0;
+	 left: 0; 
+	 right:0; 
+	
+	 position: fixed; 
+	 font-weight: bold; 
+	 color:white; 
+	 text-align:center; 
+	 font-size: 2em;
+	 z-index:999;
+
+
+}
+
+.header:before, .header:after {content:""; display: table; background-color:grey;padding:20px 0;}
+.header:after {clear:both;}
+.header {background-color:grey; border-radius: 10px;
+}
+
+
+
+.header-inner-wide{
+	background-color: black; 
+	box-shadow: 0 15px 50px orange; 
+	 width:100%; 
+	text-align:center; 
+	font-weight:bold; 
+	padding:15px 0;
+}
+
+.header-inner-wide:nth-child(2) {position:relative; top:15px;}
+
+.header-inner-thin{
+	background-color: black; 
+	box-shadow: 0 15px 50px orange; 
+	float: none; 
+	 width:90%;
+	text-align:center; 
+	font-weight:bold; 
+	padding:15px 0;
+	margin:auto;
+
+}
+
+
+.nav-ul{
+	 list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+
+}
+.nav-li-1{
+
+    float: left;
+width:25%;
+
+}
+.nav-li-2{
+
+    float: left;
+width:50%;
+
+}
+.nav-li-3{
+
+    float: left;
+width:33%;
+
+}
+.nav-li-4{
+
+    float: left;
+width:25%;
+
+}
+
+.nav-li-a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 16px 16px;
+    text-decoration: none;
+}
+
+.nav-li-a:hover {
+    background-color: #111;
+}
+
+p{
+	font-size:5rem;
+	position:relative;
+	top:330px;
+	
+}
+h3{
+	position:relative;
+	top:300px;
+}
+
+
+
+body > *:not(nav) a[href]:after{
+	content:url("intmark.png");
+}
+
+body > *:not(nav) ~ a[href]:after{
+	content:url("intmark.png");
+}
+
+
+body > *:not(nav) a[href*="pdf"]:after{
+	content:url("pdf.png");
+}
+
+
+ body > *:not(nav) a[href*="browser.png"]:after{
+	content:url("browser.png");
+}
+
+ @media screen and (max-width: 480px) {
+   
+.nav-mobile-li{
+
+    float: none;
+width:100%;
+
+}
+
+
+}
+
+
